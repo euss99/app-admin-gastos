@@ -10,6 +10,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  disponible: {
+    type: Number,
+    required: true,
+  },
   nombre: {
     type: String,
     required: true,
@@ -26,13 +30,14 @@ const props = defineProps({
 
 const emit = defineEmits([
   "ocultar-modal",
+  "guardar-gasto",
   "update:nombre",
   "update:cantidad",
   "update:categoria",
 ]);
 
 const agregarGasto = () => {
-  const { nombre, cantidad, categoria } = props;
+  const { nombre, cantidad, categoria, disponible } = props;
   if ([nombre, cantidad, categoria].includes("")) {
     error.value = "Todos los campos son obligatorios";
 
@@ -51,7 +56,16 @@ const agregarGasto = () => {
     return;
   }
 
-  console.log("Emitiendo gastos...");
+  if (cantidad > disponible) {
+    error.value = "Has excedido el presupuesto";
+
+    setTimeout(() => {
+      error.value = "";
+    }, 3000);
+    return;
+  }
+
+  emit("guardar-gasto");
 };
 </script>
 
@@ -110,7 +124,7 @@ const agregarGasto = () => {
             <option value="ahorro">Ahorro</option>
             <option value="comida">Comida</option>
             <option value="casa">Casa</option>
-            <option value="gastosVarios">Gastos varios</option>
+            <option value="gastos">Gastos varios</option>
             <option value="ocio">Ocio</option>
             <option value="salud">Salud</option>
             <option value="suscripciones">Suscripciones</option>
