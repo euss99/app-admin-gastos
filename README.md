@@ -51,7 +51,7 @@ Utilizamos props para pasar datos desde el componente principal a los componente
 
 ## Dependencia Adicional
 
-- Se han incorporado la dependencia `vue3-circle-progress` para agregar gráficas de pastel interactivas y visualmente atractivas que representan el porcentaje de gastos en cada categoría.
+Se ha incorporado la dependencia `vue3-circle-progress` para agregar una gráfica de pastel interactiva y visualmente atractiva que representan el porcentaje de gastos.
 
 ## Mobile First
 
