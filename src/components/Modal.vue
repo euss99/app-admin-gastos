@@ -26,18 +26,25 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  id: {
+    type: [String, null],
+    required: true,
+  },
 });
 
 const emit = defineEmits([
   "ocultar-modal",
   "guardar-gasto",
+  "eliminar-gasto",
   "update:nombre",
   "update:cantidad",
   "update:categoria",
 ]);
 
+const old = props.cantidad;
+
 const agregarGasto = () => {
-  const { nombre, cantidad, categoria, disponible } = props;
+  const { nombre, cantidad, categoria, disponible, id } = props;
   if ([nombre, cantidad, categoria].includes("")) {
     error.value = "Todos los campos son obligatorios";
 
@@ -56,13 +63,25 @@ const agregarGasto = () => {
     return;
   }
 
-  if (cantidad > disponible) {
-    error.value = "Has excedido el presupuesto";
+  if (id) {
+    // Tomar en cuenta el gasto ya realizado
+    if (cantidad > old + disponible) {
+      error.value = "Has excedido el presupuesto";
 
-    setTimeout(() => {
-      error.value = "";
-    }, 3000);
-    return;
+      setTimeout(() => {
+        error.value = "";
+      }, 3000);
+      return;
+    }
+  } else {
+    if (cantidad > disponible) {
+      error.value = "Has excedido el presupuesto";
+
+      setTimeout(() => {
+        error.value = "";
+      }, 3000);
+      return;
+    }
   }
 
   emit("guardar-gasto");
@@ -84,7 +103,7 @@ const agregarGasto = () => {
       :class="[modal.animar ? 'animar' : 'cerrar']"
     >
       <form class="nuevo-gasto" @submit.prevent="agregarGasto">
-        <legend>Añadir gastos</legend>
+        <legend>{{ id ? "Guardar cambios" : "Añadir gasto" }}</legend>
 
         <Alerta v-if="error">
           {{ error }}
@@ -131,8 +150,20 @@ const agregarGasto = () => {
           </select>
         </div>
 
-        <input type="submit" value="Añadir gasto" />
+        <input
+          type="submit"
+          :value="[id ? 'Guardar cambios' : 'Añadir gasto']"
+        />
       </form>
+
+      <button
+        v-if="id"
+        type="button"
+        class="btn-eliminar"
+        @click="$emit('eliminar-gasto', id)"
+      >
+        Eliminar gasto
+      </button>
     </div>
   </div>
 </template>
@@ -210,5 +241,18 @@ const agregarGasto = () => {
   color: var(--blanco);
   font-weight: 700;
   cursor: pointer;
+}
+
+.btn-eliminar {
+  padding: 1rem;
+  width: 100%;
+  background-color: #ef4444;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--blanco);
+  margin-top: 5rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 1rem;
 }
 </style>
