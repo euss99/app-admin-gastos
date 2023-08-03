@@ -35,7 +35,7 @@ Se ha utilizado computed properties para calcular y derivar datos en base a la i
 
 ### 6. Métodos de los Arrays
 
-Se ha utilizado métodos de arrays como `filter` y `map` para realizar búsquedas y transformaciones sobre la lista de gastos y categorías. Estos métodos nos permiten manipular los datos de manera efectiva y obtener información relevante.
+Se ha utilizado métodos de arrays como `filter` y `reduce` para realizar búsquedas y transformaciones sobre la lista de gastos y categorías. Estos métodos nos permiten manipular los datos de manera efectiva y obtener información relevante.
 
 ### 7. Local Storage
 
