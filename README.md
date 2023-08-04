@@ -69,4 +69,4 @@ Para utilizar ExpenseManager en tu entorno local, sigue estos pasos:
 2. Navega a la carpeta del proyecto: `cd app-admin-gastos`
 3. Instala las dependencias: `npm install`
 4. Inicia el servidor de desarrollo: `npm run serve`
-5. Abre tu navegador y visita: `http://localhost:5773`
+5. Abre tu navegador y visita: `http://localhost:5173`
